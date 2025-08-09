@@ -1,4 +1,5 @@
 # Arquivo: config/urls.py
+from clientes import views as clientes_views
 
 from django.contrib import admin
 from django.urls import path
@@ -28,4 +29,5 @@ urlpatterns = [
 
     # Rota 5: Nosso dashboard, que só pode ser acessado por usuários logados.
     path('dashboard/', accounts_views.dashboard, name='dashboard'),
+    path('clientes/', clientes_views.lista_clientes, name='lista_clientes'),
 ]

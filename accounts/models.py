@@ -56,6 +56,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     nome_completo = models.CharField(max_length=255, verbose_name="Nome do Usuário")
     email = models.EmailField(unique=True, verbose_name="Email do Usuário")
     crefito = models.CharField(max_length=20, blank=True, null=True, help_text="Apenas para instrutores")
+    data_nascimento = models.DateField(null=True, blank=True, verbose_name="Data de Nascimento")
     
     perfil = models.ForeignKey(
         PerfilUsuario, 
@@ -133,3 +134,5 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+    

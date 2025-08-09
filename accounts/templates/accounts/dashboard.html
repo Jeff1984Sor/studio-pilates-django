@@ -1,22 +1,156 @@
 <!-- Arquivo: accounts/templates/accounts/dashboard.html -->
 
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Studio Pilates</title>
+    
+    <!-- 1. Importando a biblioteca de ícones Font Awesome (via CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <!-- 2. Nosso CSS para o layout -->
     <style>
-        body { font-family: sans-serif; padding: 2rem; }
-        h1 { color: #5a67d8; }
-        p a { color: #e53e3e; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6; /* Um cinza bem claro */
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- O Menu Lateral (Sidebar) --- */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50; /* Azul escuro/grafite */
+            color: white;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 0 1rem 1.5rem 1rem;
+            border-bottom: 1px solid #34495e; /* Linha sutil de separação */
+        }
+
+        .sidebar-header h3 {
+            font-size: 1.4rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            flex-grow: 1; /* Faz o menu ocupar o espaço disponível */
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: #ecf0f1; /* Cinza claro para o texto */
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s;
+            border-left: 3px solid transparent; /* Borda para indicar item ativo */
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #34495e; /* Cor um pouco mais clara no hover */
+        }
+        
+        .sidebar-menu a.active {
+            background-color: #34495e;
+            border-left: 3px solid #3498db; /* Azul para o item ativo */
+            color: white;
+        }
+
+        .sidebar-menu i {
+            margin-right: 15px; /* Espaço entre o ícone e o texto */
+            width: 20px; /* Alinha os textos mesmo com ícones de larguras diferentes */
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #34495e;
+        }
+
+        .sidebar-footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+        
+        /* --- Área de Conteúdo Principal --- */
+        .main-content {
+            flex-grow: 1; /* Ocupa todo o resto da tela */
+            padding: 2rem;
+        }
+        
+        .main-content h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
-    <h1>Bem-vindo(a) ao seu Dashboard, {{ user.nome_completo }}!</h1>
-    <p>Esta é a sua área principal do sistema.</p>
-    
-    <br>
-    
-    <p><a href="{% url 'logout' %}">Sair do Sistema (Logout)</a></p>
+
+    <div class="dashboard-container">
+        
+        <!-- 3. A Estrutura do Menu Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Studio Pilates</h3>
+                <p>Bem-vindo, {{ user.nome_completo|truncatechars:15 }}</p>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li>
+                    <!-- O 'a.active' marca o item como selecionado -->
+                    <a href="#" class="active">
+                        <i class="fas fa-home"></i> <!-- Ícone de casa -->
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                     <a href="{% url 'lista_clientes' %}"> <!-- <<<--- MUDANÇA AQUI -->
+                         <i class="fas fa-users"></i>
+                        <span>Clientes</span>
+                    </a>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-users"></i> <!-- Ícone de usuários -->
+                        <span>Clientes</span>
+                    </a>
+                </li>
+                <!-- Adicione mais itens de menu aqui no futuro -->
+            </ul>
+            
+            <div class="sidebar-footer">
+                <a href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- 4. A Estrutura do Conteúdo Principal -->
+        <main class="main-content">
+            <h1>Página Principal (Home)</h1>
+            <p>Este é o conteúdo principal do seu dashboard. Aqui você pode colocar gráficos, atalhos e informações importantes.</p>
+        </main>
+
+    </div>
+
 </body>
 </html>
