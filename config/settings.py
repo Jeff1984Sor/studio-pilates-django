@@ -17,7 +17,8 @@ SECRET_KEY = '3ad63366efb769db61efea58baf57eaa'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1', # Para continuar funcionando localmente
+    '127.0.0.1',  # Para desenvolvimento local
+    'studio-pilates.onrender.com', # Adicionamos a URL do Render diretamente
 ]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
