@@ -1,0 +1,137 @@
+<!-- Arquivo: accounts/templates/accounts/login.html -->
+
+{% load static %} <!-- Carrega a tag 'static' do Django -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Studio Pilates</title>
+
+    <!-- Nosso CSS para estilizar a página -->
+    <style>
+        /* Reseta margens e paddings padrão do navegador */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* --- Menu Superior --- */
+        .navbar {
+            background-color: #ffffff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #5a67d8; /* Um tom de roxo/azul, comum em bem-estar */
+            text-decoration: none;
+        }
+        
+        /* --- Conteúdo Central --- */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Ocupa a altura da tela menos a altura do menu (aproximadamente) */
+            height: calc(100vh - 70px); 
+            text-align: center;
+        }
+
+        .login-box {
+            padding: 2rem;
+        }
+        
+        .logo {
+            max-width: 250px; /* Defina o tamanho máximo do seu logo */
+            margin-bottom: 2rem; /* Espaço entre o logo e o formulário */
+        }
+        
+        /* --- Formulário --- */
+        form {
+            width: 100%;
+            max-width: 350px; /* Largura máxima do formulário */
+        }
+
+        form input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        form button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #5a67d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        form button:hover {
+            background-color: #434190;
+        }
+
+        .error-message {
+            color: #e53e3e; /* Vermelho para erros */
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Menu Superior -->
+    <header class="navbar">
+        <a href="#" class="navbar-brand">Studio Pilates Vitalidade</a>
+        <!-- Aqui podemos adicionar outros links no futuro, como "Contato" -->
+    </header>
+
+    <!-- 2. Conteúdo Central (Logo e Formulário) -->
+    <main class="login-container">
+        <div class="login-box">
+            
+            <!-- 2.1. O Logo -->
+            <!-- A tag {% static '...' %} cria o caminho correto para a imagem -->
+            <img src="{% static 'accounts/images/logo.png' %}" alt="Logo do Studio" class="logo">
+
+            <!-- 2.2. O Formulário de Login -->
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- O Django vai gerar os campos de email e senha aqui -->
+                {{ form.as_p }}
+
+                <button type="submit">Entrar</button>
+
+                <!-- Mensagem de Erro (se houver) -->
+                {% if form.errors %}
+                    <p class="error-message">
+                        Seu email ou senha estão incorretos. Por favor, tente novamente.
+                    </p>
+                {% endif %}
+            </form>
+
+        </div>
+    </main>
+
+</body>
+</html>
