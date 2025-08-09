@@ -1,0 +1,22 @@
+<!-- Arquivo: accounts/templates/accounts/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Studio Pilates</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; }
+        h1 { color: #5a67d8; }
+        p a { color: #e53e3e; }
+    </style>
+</head>
+<body>
+    <h1>Bem-vindo(a) ao seu Dashboard, {{ user.nome_completo }}!</h1>
+    <p>Esta é a sua área principal do sistema.</p>
+    
+    <br>
+    
+    <p><a href="{% url 'logout' %}">Sair do Sistema (Logout)</a></p>
+</body>
+</html>

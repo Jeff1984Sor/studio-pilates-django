@@ -63,6 +63,7 @@ DATABASES = {
 }
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 TEMPLATES = [
     {
@@ -83,7 +84,7 @@ TEMPLATES = [
 
 # URL para onde o usuário é redirecionado após o login, se nenhum outro destino for especificado.
 # Vamos criar uma página de 'dashboard' ou 'home' no futuro. Por enquanto, pode ser '/admin/'.
-LOGIN_REDIRECT_URL = '/admin/' 
+LOGIN_REDIRECT_URL = 'dashboard' 
 
 # URL da página de login. Usado quando um usuário não logado tenta acessar uma página protegida.
 LOGIN_URL = 'login'

@@ -57,6 +57,54 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name="Email do Usuário")
     crefito = models.CharField(max_length=20, blank=True, null=True, help_text="Apenas para instrutores")
     
+    perfil = models.ForeignKey(
+        PerfilUsuario, 
+        on_delete=models.PROTECT, 
+        null=True, 
+        blank=True, 
+        verbose_name="Perfil de Acesso"
+    )
+    
+    is_active = models.BooleanField(default=True, verbose_name="Usuário Ativo")
+    is_staff = models.BooleanField(default=False, verbose_name="Acesso ao Admin")
+
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['nome_completo']
+
+    # --- AQUI ESTÁ A CORREÇÃO ---
+    # Adicionamos os campos que o PermissionsMixin espera, mas com um `related_name` único.
+    # Isso resolve o conflito de nomes com o modelo de usuário padrão do Django.
+    groups = models.ManyToManyField(
+        'auth.Group',
+        verbose_name='groups',
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        related_name="usuario_set", # Nome único para o nosso usuário
+        related_query_name="usuario",
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        verbose_name='user permissions',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        related_name="usuario_set", # Nome único para o nosso usuário
+        related_query_name="usuario",
+    )
+    # --- FIM DA CORREÇÃO ---
+
+
+    class Meta:
+        verbose_name = "Usuário"
+        verbose_name_plural = "Usuários"
+
+    def __str__(self):
+        return self.email
+    nome_completo = models.CharField(max_length=255, verbose_name="Nome do Usuário")
+    email = models.EmailField(unique=True, verbose_name="Email do Usuário")
+    crefito = models.CharField(max_length=20, blank=True, null=True, help_text="Apenas para instrutores")
+    
     # Relação com PerfilUsuario. `on_delete=models.PROTECT` impede que um perfil seja apagado se houver usuários nele.
     perfil = models.ForeignKey(
         PerfilUsuario, 

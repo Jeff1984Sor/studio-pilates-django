@@ -1,28 +1,31 @@
-"""
-URL configuration for config project.
+# Arquivo: config/urls.py
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-# Importamos as views de login e logout prontas do Django
-from django.contrib.auth import views as auth_views
 
+# Importações necessárias para as views de autenticação e redirecionamento
+from django.contrib.auth import views as auth_views
+from django.views.generic.base import RedirectView
+
+# Importação das nossas views customizadas do app 'accounts'
+from accounts import views as accounts_views
+
+
+# Este é o "mapa de rotas" principal do seu site.
+# O Django lê esta lista de cima para baixo.
 urlpatterns = [
+    # Rota 1: Redireciona a página inicial (caminho vazio) para a página de login.
+    path('', RedirectView.as_view(url='/login/', permanent=False), name='home'),
+
+    # Rota 2: A página de administração padrão do Django.
     path('admin/', admin.site.urls),
-    
-    # VERIFIQUE SE ESTE BLOCO ESTÁ AQUI
+
+    # Rota 3: Nossa página de login personalizada.
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+
+    # Rota 4: A funcionalidade de logout, que redireciona para o login após sair.
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+
+    # Rota 5: Nosso dashboard, que só pode ser acessado por usuários logados.
+    path('dashboard/', accounts_views.dashboard, name='dashboard'),
 ]
